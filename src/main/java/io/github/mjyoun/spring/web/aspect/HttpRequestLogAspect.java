@@ -1,4 +1,4 @@
-package io.github.mjyoun.spring_web.aspect;
+package io.github.mjyoun.spring.web.aspect;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -1,4 +1,4 @@
-package io.github.mjyoun.spring_web.filter;
+package io.github.mjyoun.spring.web.filter;
 
 import java.io.IOException;
 
