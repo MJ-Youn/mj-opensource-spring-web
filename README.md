@@ -9,3 +9,6 @@
  - logging을 위한 Aspect 추가
  - http 연결 thread의 이름 변경을 위한 filter 추가
  - marker class 추가 
+
+ ### 0.1.1-SNAPSHOT - 20220104
+  - ErrorController 추가 
