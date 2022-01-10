@@ -7,10 +7,9 @@ import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -35,16 +34,15 @@ public class CustomErrorController {
      * @author MJ Youn
      * @since 2022. 01. 04.
      */
-    @ExceptionHandler({ MethodArgumentNotValidException.class, ConstraintViolationException.class })
+    @ExceptionHandler({ BindException.class, ConstraintViolationException.class })
     public ResponseEntity<Result<String>> argumentCheck(Exception e) {
         Result<String> result = null;
 
-        if (e instanceof MethodArgumentNotValidException) {
-            BindingResult bindingResult = ((MethodArgumentNotValidException) e).getBindingResult();
+        if (e instanceof BindException) {
+            BindingResult bindingResult = ((BindException) e).getBindingResult();
             String[] violateMsgs = !bindingResult.hasErrors() ? new String[0] //
                     : bindingResult.getAllErrors() //
                             .stream() //
-                            .filter(error -> error instanceof FieldError) //
                             .map(ObjectError::getDefaultMessage) //
                             .toArray(String[]::new);
 
