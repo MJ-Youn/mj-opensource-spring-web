@@ -10,5 +10,12 @@
  - http 연결 thread의 이름 변경을 위한 filter 추가
  - marker class 추가 
 
- ### 0.1.1-SNAPSHOT - 20220104
-  - ErrorController 추가 
+### 0.1.1-SNAPSHOT - 20220104
+- ErrorController 추가 
+
+### 0.1.1-SNAPSHOT - 20220112
+- ErrorController 수정
+    + 로그 추가
+
+### 0.1.1 - 20220117
+- 배포를 위한 버전 변경 

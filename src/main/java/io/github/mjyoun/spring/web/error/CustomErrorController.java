@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.github.mjyoun.core.data.Result;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 에러 핸들 controller
@@ -22,6 +23,7 @@ import io.github.mjyoun.core.data.Result;
  * @since 2022. 01. 04.
  */
 @RestControllerAdvice
+@Slf4j
 public class CustomErrorController {
 
     /**
@@ -58,6 +60,7 @@ public class CustomErrorController {
             result = Result.error(String.join(",", violateMsgs));
         }
 
+        log.error("[CustomErrorController] 유효성 검사 오류 [msg: {}]", result.getMessage());
         return new ResponseEntity<Result<String>>(result, HttpStatus.BAD_REQUEST);
     }
 
@@ -75,6 +78,7 @@ public class CustomErrorController {
     public ResponseEntity<Result<String>> error(Exception e) {
         Result<String> result = Result.error(e.getMessage());
 
+        log.error("[CustomErrorController] 서버 오류 [msg: {}]", result.getMessage());
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
