@@ -1,4 +1,4 @@
-package io.github.mjyoun.springsecurity.security;
+package io.github.mjyoun.spring.web.security;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +23,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractCustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
+    /**
+     * 권한 필요없이 접근 가능한 페이지 목록을 조회하는 함수
+     * 
+     * @return 권한 필요없이 접근 가능한 페이지 목록
+     * 
+     * @author MJ Youn
+     * @since 2022. 02. 25.
+     */
     protected abstract String[] getAllAccessPages();
 
+    /**
+     * 권한이 없을 경우에만 접근 가능한 페이지 목록을 조회하는 함수
+     * 
+     * @return 권한이 없을 경우에만 접근 가능한 페이지 목록
+     * 
+     * @author MJ Youn
+     * @since 2022. 02. 25.
+     */
     protected abstract String[] getAnonymousePages();
 
     /**
