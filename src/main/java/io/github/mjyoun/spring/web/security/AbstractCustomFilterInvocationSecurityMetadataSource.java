@@ -83,12 +83,17 @@ public abstract class AbstractCustomFilterInvocationSecurityMetadataSource imple
         HttpServletRequest request = fi.getHttpRequest();
 
         String method = request.getMethod();
-        String contentType = request.getContentType();
         String url = request.getRequestURI();
-        String contextPath = request.getContextPath();
-        String remoteAttr = request.getRemoteAddr();
+        
+        try {
+            String contentType = request.getContentType();
+            String contextPath = request.getContextPath();
+            String remoteAttr = request.getRemoteAddr();
 
-        log.debug("{}{} {}{}, from: {}", method, contentType == null ? "" : " " + contentType, url, contextPath, remoteAttr);
+            log.debug("{}{} {}{}, from: {}", method, contentType == null ? "" : " " + contentType, url, contextPath, remoteAttr);
+        } catch (Exception e) {
+            log.debug("{} {}", method, url);
+        }
 
         // 페이지에 대한 접근 인지 확인
         if (this.isAllAccessPage(url)) {
