@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
@@ -60,15 +62,13 @@ public abstract class AbstractCustomFilterInvocationSecurityMetadataSource imple
     /**
      * API 호출이 가능한 권한 목록을 조회하는 함수
      * 
-     * @param <T>
-     *            권한 객체 정보. {@link ConfigAttribute}를 상속 받은 객체여야함
      * @param method
      *            API의 Method
      * @param url
      *            API의 URL
      * @return 해당 API를 호출할 수 있는 권한 목록
      */
-    protected abstract <T extends ConfigAttribute> List<T> getRolesAccessedApi(String method, String url);
+    protected abstract List<ConfigAttribute> getRolesAccessedApi(String method, String url);
 
     /**
      * @see FilterInvocationSecurityMetadataSource#getAttributes(Object)
@@ -84,7 +84,7 @@ public abstract class AbstractCustomFilterInvocationSecurityMetadataSource imple
 
         String method = request.getMethod();
         String url = request.getRequestURI();
-        
+
         try {
             String contentType = request.getContentType();
             String contextPath = request.getContextPath();
@@ -135,6 +135,16 @@ public abstract class AbstractCustomFilterInvocationSecurityMetadataSource imple
         return FilterInvocation.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * 권한에 상관 없이 접근 가능한 페이지인지 확인하는 함수
+     * 
+     * @param url
+     *            접속한 페이지 정보
+     * @return true일 경우 모두 접근 가능한 페이지
+     * 
+     * @author MJ Youn
+     * @since 2022. 03. 15.
+     */
     private boolean isAllAccessPage(String url) {
         return Arrays.asList(this.getAllAccessPages()) //
                 .parallelStream() //
@@ -143,12 +153,45 @@ public abstract class AbstractCustomFilterInvocationSecurityMetadataSource imple
                 .orElse(null) != null;
     }
 
+    /**
+     * 로그인하지 않는 유저만 접근 가능한 페이지인지 확인하는 함수
+     * 
+     * @param url
+     *            접속한 페이지 정보
+     * @return true일 경우 로그인하지 않은 유저만 접근 가능한 페이지
+     * 
+     * @author MJ Youn
+     * @since 2022. 03. 15.
+     */
     private boolean isAnonymousePage(String url) {
         return Arrays.asList(this.getAnonymousePages()) //
                 .parallelStream() //
                 .filter(page -> StringUtils.equals(page, url)) //
                 .findAny() //
                 .orElse(null) != null;
+    }
+
+    /**
+     * 권한 목록을 securit에서 사용하기 위한 {@link ConfigAttribute} 목록으로 변환하는 함수
+     * 
+     * @param <T>
+     *            {@link AbstractGrade}
+     * @param grades
+     *            권한 목록
+     * @return {@link ConfigAttribute} 목록
+     * 
+     * @author MJ Youn
+     * @since 2022. 03. 15.
+     */
+    protected <T extends AbstractGrade> List<ConfigAttribute> convert(List<T> grades) {
+        if (grades == null) {
+            return new ArrayList<>();
+        } else {
+            return grades //
+                    .parallelStream() //
+                    .map(g -> new SecurityConfig(g.getId())) //
+                    .collect(Collectors.toList());
+        }
     }
 
 }

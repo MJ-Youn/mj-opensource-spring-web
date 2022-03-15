@@ -26,3 +26,6 @@
 
 ### 0.1.3, 0.1.4 - 20220315
 - security log 출력 오류 수정 
+
+### 0.1.5, 0.1.6 - 20220315
+- AbstractCustomFilterInvocationSecurityMetadataSource.java의 convert(List<AbstractGrade>) 함수 추가
