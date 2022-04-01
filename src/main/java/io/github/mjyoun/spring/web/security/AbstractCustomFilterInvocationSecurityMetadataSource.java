@@ -87,10 +87,9 @@ public abstract class AbstractCustomFilterInvocationSecurityMetadataSource imple
 
         try {
             String contentType = request.getContentType();
-            String contextPath = request.getContextPath();
             String remoteAttr = request.getRemoteAddr();
 
-            log.debug("{}{} {}{}, from: {}", method, contentType == null ? "" : " " + contentType, url, contextPath, remoteAttr);
+            log.debug("{}{} {}, from: {}", method, contentType == null ? "" : " " + contentType, url, remoteAttr);
         } catch (Exception e) {
             log.debug("{} {}", method, url);
         }

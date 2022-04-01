@@ -29,3 +29,6 @@
 
 ### 0.1.5, 0.1.6 - 20220315
 - AbstractCustomFilterInvocationSecurityMetadataSource.java의 convert(List<AbstractGrade>) 함수 추가
+
+### 0.1.7 - 20220401
+- AbstractCustomFilterInvocationSecurityMetadataSource.java의 context path 출력 오류 수정 
