@@ -10,14 +10,14 @@
 	<groupId>io.github.mj-youn</groupId>
 
 	<artifactId>spring-web</artifactId>
-	<version>0.1.7</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
+	<version>0.1.10</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
 
 	<name>io.github.mj-youn.spring-web</name>
 	<description>A project that organizes frequently used utilities in Spring Web Service</description>
 
 	<properties>
 		<mj-youn.core.version>0.1.5</mj-youn.core.version>
-		<mj-youn.spring.version>0.1.9</mj-youn.spring.version>
+		<mj-youn.spring.version>0.2.6</mj-youn.spring.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -129,6 +129,14 @@
 		</dependency>
 		<!-- end: jackson -->
 		<!-- ************** -->
+
+		<!-- BEGIN: opencsv -->
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.5.2</version>
+		</dependency>
+		<!-- E N D: opencsv -->
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
