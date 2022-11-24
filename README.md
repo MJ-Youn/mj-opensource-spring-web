@@ -32,3 +32,9 @@
 
 ### 0.1.7 - 20220401
 - AbstractCustomFilterInvocationSecurityMetadataSource.java의 context path 출력 오류 수정 
+
+### 0.1.8 ~ 0.2.0 - 20221124
+- DownloadService 추가
+ + 파일 다운로드 관련 기능
+- SecurityUtils 추가
+ + spring security에서 사용할 기능
