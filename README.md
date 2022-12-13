@@ -38,3 +38,6 @@
  + 파일 다운로드 관련 기능
 - SecurityUtils 추가
  + spring security에서 사용할 기능
+
+### 0.2.1 - 20221213
+- DownloadService 오류 수정

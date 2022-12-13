@@ -217,12 +217,14 @@ public class DownloadService {
 
         log.debug("[{}] 다운로드 할 파일 이름: {}", methodName, downloadFileName);
 
+        byte[] bytes = contents.getBytes();
+
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        response.setContentLength((int) contents.length());
+        response.setContentLength((int) bytes.length);
         response.setHeader("Content-Disposition", contentDisposition);
 
         try {
-            InputStream inputStream = new ByteArrayInputStream(contents.getBytes());
+            InputStream inputStream = new ByteArrayInputStream(bytes);
 
             FileCopyUtils.copy(inputStream, response.getOutputStream());
             log.debug("[{}] 파일 다운로드 요청 성공 [file name: {}]", methodName, downloadFileName);
