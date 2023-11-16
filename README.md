@@ -41,3 +41,6 @@
 
 ### 0.2.1 - 20221213
 - DownloadService 오류 수정
+
+### 0.2.2 - 20231116
+- DownloadService의 downloadBytes 함수 추가

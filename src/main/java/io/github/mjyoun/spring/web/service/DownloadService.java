@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -91,7 +92,8 @@ public class DownloadService {
      * @author MJ Youn
      * @since 2022. 06. 21.
      */
-    public void downloadCsv(@NotNull String fileName, String[] headers, List<String[]> datas, char separator, char quote, HttpServletResponse response) throws IOException {
+    public void downloadCsv(@NotNull String fileName, String[] headers, List<String[]> datas, char separator, char quote,
+            HttpServletResponse response) throws IOException {
         final String methodName = "DownloadService#downloadCSV";
 
         fileName = new StringBuffer(fileName).append(".csv").toString();
@@ -136,7 +138,8 @@ public class DownloadService {
      * @author MJ Youn
      * @since 2022. 08. 12.
      */
-    public void downloadFile(@NotNull Path filePath, @NotNull HttpServletResponse response) throws FileNotFoundException, UnsupportedEncodingException {
+    public void downloadFile(@NotNull Path filePath, @NotNull HttpServletResponse response)
+            throws FileNotFoundException, UnsupportedEncodingException {
         this.downloadFile(filePath.toFile().getName(), filePath, response);
     }
 
@@ -158,7 +161,8 @@ public class DownloadService {
      * @author MJ Youn
      * @since 2022. 08. 12.
      */
-    public void downloadFile(@NotBlank String downloadFileName, @NotNull Path filePath, @NotNull HttpServletResponse response) throws FileNotFoundException, UnsupportedEncodingException {
+    public void downloadFile(@NotBlank String downloadFileName, @NotNull Path filePath, @NotNull HttpServletResponse response)
+            throws FileNotFoundException, UnsupportedEncodingException {
         final String methodName = "DownloadService#downloadFile";
 
         if (!Files.exists(filePath)) {
@@ -194,6 +198,8 @@ public class DownloadService {
     /**
      * plain text를 파일 형태로 다운로드
      * 
+     * @see DownloadService#downloadBytes(String, byte[], HttpServletResponse)
+     * 
      * @param downloadFileName
      *            다운로드할 파일 이름
      * @param contents
@@ -207,8 +213,51 @@ public class DownloadService {
      * @author MJ Youn
      * @since 2022. 11. 24.
      */
-    public void downloadPlainTextFile(@NotBlank String downloadFileName, @NotNull String contents, @NotNull HttpServletResponse response) throws UnsupportedEncodingException {
-        final String methodName = "DownloadService#downloadPlainTextFile";
+    public void downloadPlainTextFile(@NotBlank String downloadFileName, @NotNull String contents, @NotNull HttpServletResponse response)
+            throws UnsupportedEncodingException {
+        byte[] bytes = contents.getBytes();
+        this.downloadBytes(downloadFileName, bytes, response);
+    }
+
+    /**
+     * plain text를 파일 형태로 다운로드
+     * 
+     * @see DownloadService#downloadPlainTextFile(String, String, HttpServletResponse)
+     * 
+     * @param downloadFileName
+     *            다운로드할 파일 이름
+     * @param contents
+     *            다운로드할 파일의 목록. `\r\n`로 구분 join함
+     * @param response
+     *            {@link HttpServletResponse}
+     * @throws UnsupportedEncodingException
+     *             파일 이름 인코딩 설정이 잘못 되었을 경우
+     * 
+     * @author MJ Youn
+     * @since 2023. 11. 16.
+     */
+    public void downloadPlainTextFile(@NotBlank String downloadFileName, @NotNull List<String> contents, @NotNull HttpServletResponse response)
+            throws UnsupportedEncodingException {
+        String _contents = StringUtils.join(contents, "\r\n");
+        this.downloadPlainTextFile(downloadFileName, _contents, response);
+    }
+
+    /**
+     * bytes를 파일 형태로 다운로드
+     * 
+     * @param downloadFileName
+     *            다운로드할 파일 이름
+     * @param contents
+     *            다운로드할 파일의 내용
+     * @param response
+     *            {@link HttpServletResponse}
+     * 
+     * @throws UnsupportedEncodingException
+     *             파일 이름 인코딩 설정이 잘못 되었을 경우. 발생하지 않을 듯...
+     */
+    public void downloadBytes(@NotBlank String downloadFileName, @NotNull byte[] contents, @NotNull HttpServletResponse response)
+            throws UnsupportedEncodingException {
+        final String methodName = "DownloadService#downloadBytes";
 
         String contentDisposition = new StringBuffer("attachment; filename=\"") //
                 .append(URLEncoder.encode(downloadFileName, "UTF-8").replace("+", "%20")) //
@@ -217,14 +266,12 @@ public class DownloadService {
 
         log.debug("[{}] 다운로드 할 파일 이름: {}", methodName, downloadFileName);
 
-        byte[] bytes = contents.getBytes();
-
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        response.setContentLength((int) bytes.length);
+        response.setContentLength((int) contents.length);
         response.setHeader("Content-Disposition", contentDisposition);
 
         try {
-            InputStream inputStream = new ByteArrayInputStream(bytes);
+            InputStream inputStream = new ByteArrayInputStream(contents);
 
             FileCopyUtils.copy(inputStream, response.getOutputStream());
             log.debug("[{}] 파일 다운로드 요청 성공 [file name: {}]", methodName, downloadFileName);

@@ -58,6 +58,8 @@ public class CustomErrorController {
                     .toArray(String[]::new);
 
             result = Result.error(String.join(",", violateMsgs));
+        } else {
+            throw new RuntimeException("존재하지 않는 오류입니다.");
         }
 
         log.error("[CustomErrorController] 유효성 검사 오류 [msg: {}]", result.getMessage());
