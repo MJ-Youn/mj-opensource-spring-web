@@ -44,3 +44,6 @@
 
 ### 0.2.2 - 20231116
 - DownloadService의 downloadBytes 함수 추가
+
+### 0.2.3 - 20240207
+- DownloadService에 Excel 관련 기능 추가

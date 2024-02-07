@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
@@ -15,11 +16,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import io.github.mjyoun.core.utils.excel.ExcelUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -277,6 +280,98 @@ public class DownloadService {
             log.debug("[{}] 파일 다운로드 요청 성공 [file name: {}]", methodName, downloadFileName);
         } catch (IOException ioe) {
             log.error("[{}] 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
+            ioe.printStackTrace();
+        }
+    }
+
+    /**
+     * 엑셀 파일 다운로드
+     * 
+     * @param fileName
+     *            확장자를 제외한, 다운로드할 파일 이름 (확장자는 자동으로 붙혀줌)
+     * @param headers
+     *            헤더 정보
+     * @param datas
+     *            데이터 정보
+     * @param response
+     *            {@link HttpServletResponse}
+     * 
+     * @throws IOException
+     *             Encoding 에러
+     * 
+     * @author MJ Youn
+     * @since 2024. 02. 07.
+     */
+    public void downloadExcel(@NotBlank String fileName, @NotNull String[] headers, @NotNull Object[][] datas, HttpServletResponse response)
+            throws IOException {
+        final String methodName = "DownloadService#downladExcel";
+
+        fileName = new StringBuffer(fileName).append(".xlsx").toString();
+        log.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
+
+        SXSSFWorkbook workbook = ExcelUtils.create(headers, datas);
+
+        // download를 위한 disposition 생성
+        String contentDisposition = new StringBuffer("attachment; filename=\"") //
+                .append(URLEncoder.encode(fileName, "UTF-8").replace("+", "%20")) //
+                .append("\"") //
+                .toString();
+
+        try (OutputStream outputStream = response.getOutputStream()) {
+            response.setContentType("text/xlsx");
+            response.setHeader("Content-Disposition", contentDisposition);
+
+            workbook.write(outputStream);
+            log.debug("[{}] Excel 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
+        } catch (IOException ioe) {
+            log.error("[{}] Excel 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
+            ioe.printStackTrace();
+        }
+    }
+
+    /**
+     * 엑셀 파일 다운로드
+     * 
+     * @param <T>
+     *            데이터 정보
+     * @param fileName
+     *            확장자를 제외한, 다운로드할 파일 이름 (확장자는 자동으로 붙혀줌)
+     * @param contents
+     *            다운로드할 내용
+     * @param clazz
+     *            파일의 class 정보
+     * @param response
+     *            {@link HttpServletResponse}
+     * 
+     * @throws IOException
+     *             Encoding 에러
+     * 
+     * @author MJ Youn
+     * @since 2024. 02. 07.
+     */
+    public <T> void downloadExcel(@NotBlank String fileName, @NotNull List<T> contents, @NotNull Class<T> clazz, HttpServletResponse response)
+            throws IOException {
+        final String methodName = "DownloadService#downladExcel";
+
+        fileName = new StringBuffer(fileName).append(".xlsx").toString();
+        log.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
+
+        SXSSFWorkbook workbook = ExcelUtils.create(contents, clazz);
+
+        // download를 위한 disposition 생성
+        String contentDisposition = new StringBuffer("attachment; filename=\"") //
+                .append(URLEncoder.encode(fileName, "UTF-8").replace("+", "%20")) //
+                .append("\"") //
+                .toString();
+
+        try (OutputStream outputStream = response.getOutputStream()) {
+            response.setContentType("text/xlsx");
+            response.setHeader("Content-Disposition", contentDisposition);
+
+            workbook.write(outputStream);
+            log.debug("[{}] Excel 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
+        } catch (IOException ioe) {
+            log.error("[{}] Excel 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
             ioe.printStackTrace();
         }
     }
