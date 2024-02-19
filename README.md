@@ -47,3 +47,6 @@
 
 ### 0.2.3 - 20240207
 - DownloadService에 Excel 관련 기능 추가
+
+### 0.2.4 - 20240219
+- Security 오류 수정

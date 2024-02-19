@@ -63,6 +63,7 @@ public class CustomErrorController {
         }
 
         log.error("[CustomErrorController] 유효성 검사 오류 [msg: {}]", result.getMessage());
+        e.printStackTrace();
         return new ResponseEntity<Result<String>>(result, HttpStatus.BAD_REQUEST);
     }
 
@@ -81,6 +82,7 @@ public class CustomErrorController {
         Result<String> result = Result.error(e.getMessage());
 
         log.error("[CustomErrorController] 서버 오류 [msg: {}]", result.getMessage());
+        e.printStackTrace();
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
