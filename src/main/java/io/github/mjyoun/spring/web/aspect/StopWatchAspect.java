@@ -75,7 +75,8 @@ public class StopWatchAspect {
                     stopWatch.stop();
                 }
 
-                stopWatch.start(annotation.taskName());
+                String name = annotation.taskName() == null ? annotation.value() : annotation.taskName();
+                stopWatch.start(name);
             }
         }
     }
@@ -125,7 +126,8 @@ public class StopWatchAspect {
         StopWatch annotation = method.getAnnotation(StopWatch.class);
 
         if (annotation != null) {
-            CustomStopWatch stopWatch = new CustomStopWatch(annotation.name(), "hh:MM:ss.SSS uuuu");
+            String name = annotation.name() == null ? annotation.value() : annotation.name();
+            CustomStopWatch stopWatch = new CustomStopWatch(name, "hh:MM:ss.SSS uuuu");
 
             String threadName = Thread.currentThread().getName();
             this.stopWatchMap.put(threadName, stopWatch);
