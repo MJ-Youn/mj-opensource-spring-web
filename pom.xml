@@ -10,14 +10,14 @@
 	<groupId>io.github.mj-youn</groupId>
 
 	<artifactId>spring-web</artifactId>
-	<version>0.2.4</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
+	<version>0.2.5</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
 
 	<name>io.github.mj-youn.spring-web</name>
 	<description>A project that organizes frequently used utilities in Spring Web Service</description>
 
 	<properties>
 		<mj-youn.core.version>0.2.0</mj-youn.core.version>
-		<mj-youn.spring.version>0.2.8</mj-youn.spring.version>
+		<mj-youn.spring.version>0.3.1</mj-youn.spring.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>

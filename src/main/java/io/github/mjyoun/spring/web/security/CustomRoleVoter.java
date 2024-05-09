@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.core.Authentication;
@@ -55,7 +54,7 @@ public class CustomRoleVoter extends RoleVoter {
                 for (GrantedAuthority authority : authorities) {
                     if (authority.getAuthority() != null) {
                         List<String> grades = Arrays.asList(authority.getAuthority().split(","));
-                        
+
                         boolean authHas = grades.indexOf(attribute.getAttribute()) > -1;
 
                         if (authHas) {
