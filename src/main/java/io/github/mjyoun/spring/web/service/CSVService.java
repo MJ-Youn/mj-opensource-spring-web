@@ -40,7 +40,7 @@ public class CSVService {
      * @param separator
      *            구분자
      * @param quote
-     *            따옴표, 없을 경우 따옴표 하지 않음. 있을 경우 무조건 따옴표로 묶음
+     *            따옴표, '\0'일 경우 따옴표 하지 않음. 있을 경우 무조건 따옴표로 묶음
      * @return CSV 파일 데이터가 들어있는 byte array
      * 
      * @throws IOException
@@ -98,7 +98,7 @@ public class CSVService {
      * @param separator
      *            구분자
      * @param quote
-     *            따옴표, 없을 경우 따옴표 하지 않음. 있을 경우 무조건 따옴표로 묶음
+     *            따옴표, '\0'일 경우 따옴표 하지 않음. 있을 경우 무조건 따옴표로 묶음
      * @throws IOException
      *             CSV FileWriter 생성 실패
      * 
