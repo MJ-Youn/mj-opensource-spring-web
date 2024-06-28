@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import io.github.mjyoun.spring.utils.CustomStopWatch;
 import io.github.mjyoun.spring.web.annotation.StopWatch;
-import io.github.mjyoun.spring.web.annotation.StopWatchRecord;
+import io.github.mjyoun.spring.web.annotation.StopWatchTask;
 
 /**
  * Stopwatch 표시를 위한 Aspect 설정
@@ -47,11 +48,11 @@ public class StopWatchAspect {
      * @author MJ Youn
      * @since 2024. 05. 09.
      */
-    @Pointcut("@annotation(io.github.mjyoun.spring.web.annotation.StopWatchRecord)")
-    public void enableRecord() {};
+    @Pointcut("@annotation(io.github.mjyoun.spring.web.annotation.StopWatchTask)")
+    public void enableTask() {};
 
     /**
-     * Record 시작
+     * Task 시작
      * 
      * @param joinPoint
      *            {@link JoinPoint}
@@ -59,12 +60,12 @@ public class StopWatchAspect {
      * @author MJ Youn
      * @since 2024. 05. 09.
      */
-    @Before("enableRecord()")
-    public void startRecord(JoinPoint joinPoint) {
+    @Before("enableTask()")
+    public void startTask(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getStaticPart().getSignature();
         Method method = methodSignature.getMethod();
 
-        StopWatchRecord annotation = method.getAnnotation(StopWatchRecord.class);
+        StopWatchTask annotation = method.getAnnotation(StopWatchTask.class);
 
         if (annotation != null) {
             String threadName = Thread.currentThread().getName();
@@ -75,14 +76,14 @@ public class StopWatchAspect {
                     stopWatch.stop();
                 }
 
-                String name = annotation.taskName() == null ? annotation.value() : annotation.taskName();
+                String name = StringUtils.isBlank(annotation.taskName()) ? annotation.value() : annotation.taskName();
                 stopWatch.start(name);
             }
         }
     }
 
     /**
-     * Record 종료
+     * Task 종료
      * 
      * @param joinPoint
      *            {@link JoinPoint}
@@ -90,12 +91,12 @@ public class StopWatchAspect {
      * @author MJ Youn
      * @since 2024. 05. 09.
      */
-    @After("enableRecord()")
-    public void stopRecord(JoinPoint joinPoint) {
+    @After("enableTask()")
+    public void stopTask(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getStaticPart().getSignature();
         Method method = methodSignature.getMethod();
 
-        StopWatchRecord annotation = method.getAnnotation(StopWatchRecord.class);
+        StopWatchTask annotation = method.getAnnotation(StopWatchTask.class);
 
         if (annotation != null) {
             String threadName = Thread.currentThread().getName();
@@ -126,7 +127,7 @@ public class StopWatchAspect {
         StopWatch annotation = method.getAnnotation(StopWatch.class);
 
         if (annotation != null) {
-            String name = annotation.name() == null ? annotation.value() : annotation.name();
+            String name = StringUtils.isBlank(annotation.name()) ? annotation.value() : annotation.name();
             CustomStopWatch stopWatch = new CustomStopWatch(name, "hh:MM:ss.SSS uuuu");
 
             String threadName = Thread.currentThread().getName();
@@ -159,7 +160,7 @@ public class StopWatchAspect {
                     stopWatch.stop();
                 }
 
-                logger.debug(stopWatch.prettyPrint());
+                logger.trace(stopWatch.prettyPrint());
             }
         }
     }

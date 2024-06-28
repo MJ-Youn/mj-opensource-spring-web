@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.HandlerMapping;
  * @author MJ Youn
  * @since 2022. 01. 04.
  */
+@Order(value = 100)
 @Aspect
 @Component
 public class HttpRequestLogAspect {
@@ -32,8 +34,52 @@ public class HttpRequestLogAspect {
      * @since 2022. 01. 04.
      */
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
-    public void requestMapping() {
-    };
+    public void requestMapping() {}
+
+    /**
+     * GetMapping Annotation을 pointcut으로 등록
+     * 
+     * @author MJ Youn
+     * @since 2024. 06. 20.
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
+    public void getMapping() {}
+
+    /**
+     * PutMapping Annotation을 pointcut으로 등록
+     * 
+     * @author MJ Youn
+     * @since 2024. 06. 20.
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PutMapping)")
+    public void putMapping() {}
+
+    /**
+     * PostMapping Annotation을 pointcut으로 등록
+     * 
+     * @author MJ Youn
+     * @since 2024. 06. 20.
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
+    public void postMapping() {}
+
+    /**
+     * DeleteMapping Annotation을 pointcut으로 등록
+     * 
+     * @author MJ Youn
+     * @since 2024. 06. 20.
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.DeleteMapping)")
+    public void deleteMapping() {}
+
+    /**
+     * PatchMapping Annotation을 pointcut으로 등록
+     * 
+     * @author MJ Youn
+     * @since 2024. 06. 20.
+     */
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PatchMapping)")
+    public void patchMapping() {}
 
     /**
      * requestMapping() method 호출 전에 호출되는 메소드
@@ -44,7 +90,7 @@ public class HttpRequestLogAspect {
      * @author MJ Youn
      * @since 2022. 01. 04.
      */
-    @Before("requestMapping()") // pointcut으로 등록된 requestMapping 정보를 호출하기 위한 설정
+    @Before("requestMapping() || getMapping() || putMapping() || postMapping() || deleteMapping() || patchMapping()") // pointcut으로 등록된 requestMapping 정보를 호출하기 위한 설정
     public void printLogBeforeController(JoinPoint joinPoint) {
         // 요청 정보
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();

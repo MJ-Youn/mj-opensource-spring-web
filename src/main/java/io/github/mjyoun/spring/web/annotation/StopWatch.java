@@ -19,6 +19,9 @@ import org.springframework.core.annotation.AliasFor;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface StopWatch {
 
+    /**
+     * Stop watch 이름
+     */
     @AliasFor("name")
     String value() default "";
 

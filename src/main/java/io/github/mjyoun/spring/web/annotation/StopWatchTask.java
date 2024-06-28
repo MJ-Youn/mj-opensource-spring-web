@@ -17,8 +17,11 @@ import org.springframework.core.annotation.AliasFor;
 @Documented
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface StopWatchRecord {
+public @interface StopWatchTask {
 
+    /**
+     * Task 이름
+     */
     @AliasFor("taskName")
     String value() default "";
 
@@ -27,5 +30,5 @@ public @interface StopWatchRecord {
      */
     @AliasFor("value")
     String taskName() default "";
-    
+
 }

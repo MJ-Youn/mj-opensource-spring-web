@@ -62,3 +62,10 @@
 
 ### 0.2.8 - 20240522
 - 사용하지 않는 dependency 제거
+
+### 0.2.9, 0.2.10, 0.3.0 - 20240620
+- HttpRequestLog의 순서 설정
+- GetMapping, PostMapping, PatchMapping, PutMapping, DeleteMapping도 aspect로 로그를 찍도록 수정
+
+### 0.3.1 - 20240628
+- StopWatch Annotation 테스트 완료
