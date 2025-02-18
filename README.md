@@ -69,3 +69,9 @@
 
 ### 0.3.1 - 20240628
 - StopWatch Annotation 테스트 완료
+
+### 0.3.2 - 20250218
+ - 배포 library 변경 
+  + nexus-staging-maven-plugin -> central-publishing-maven-plugin
+  + repository 위치 변경 (ossrh -> central)
+  + license, developer info 추가

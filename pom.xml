@@ -7,10 +7,32 @@
 		<version>9</version>
 	</parent>
 
+	<!-- Developer info -->
+	<developers>
+		<developer>
+			<id>yun0244</id>
+			<name>MJ Youn</name>
+			<email>yun0244@naver.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<organization>MJ Youn</organization>
+			<organizationUrl>http://mj-youn.github.io</organizationUrl>
+		</developer>
+	</developers>
+
+	<!-- License -->
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT</url>
+		</license>
+	</licenses>
+
 	<groupId>io.github.mj-youn</groupId>
 
 	<artifactId>spring-web</artifactId>
-	<version>0.3.1</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
+	<version>0.3.2</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
 
 	<name>io.github.mj-youn.spring-web</name>
 	<description>A project that organizes frequently used utilities in Spring Web Service</description>
@@ -143,16 +165,18 @@
 
 	<!-- publishing 설정 -->
 	<distributionManagement>
-		<!-- snapshot publishing -->
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
 		<!-- release publishing -->
 		<repository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
+		<!-- snapshot publishing -->
+		<snapshotRepository>
+			<id>central</id>
+			<name>Central Repository Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<build>
@@ -189,14 +213,12 @@
 		<plugins>
 			<!-- BEGIN: publishing -->
 			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.8</version>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.7.0</version>
 				<extensions>true</extensions>
 				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<publishingServerId>central</publishingServerId>
 				</configuration>
 			</plugin>
 			<!-- E N D: publishing -->
