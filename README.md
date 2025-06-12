@@ -75,3 +75,6 @@
   + nexus-staging-maven-plugin -> central-publishing-maven-plugin
   + repository 위치 변경 (ossrh -> central)
   + license, developer info 추가
+
+### 0.3.3 - 20250612
+ - mj-opensource-core의 버전 변경 (0.2.0 -> 0.2.2)
