@@ -62,8 +62,7 @@ public class CustomErrorController {
             throw new RuntimeException("존재하지 않는 오류입니다.");
         }
 
-        log.error("[CustomErrorController] 유효성 검사 오류 [msg: {}]", result.getMessage());
-        e.printStackTrace();
+        log.error("[CustomErrorController] 유효성 검사 오류 [msg: {}]", result.getMessage(), e);
         return new ResponseEntity<Result<String>>(result, HttpStatus.BAD_REQUEST);
     }
 
@@ -81,8 +80,7 @@ public class CustomErrorController {
     public ResponseEntity<Result<String>> error(Exception e) {
         Result<String> result = Result.error(e.getMessage());
 
-        log.error("[CustomErrorController] 서버 오류 [msg: {}]", result.getMessage());
-        e.printStackTrace();
+        log.error("[CustomErrorController] 서버 오류 [msg: {}]", result.getMessage(), e);
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
