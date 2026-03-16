@@ -11,19 +11,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.annotation.Validated;
 
 import io.github.mjyoun.core.utils.excel.ExcelUtils;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Download 기능 관련된 유틸리티 클래스
@@ -31,9 +32,11 @@ import lombok.extern.slf4j.Slf4j;
  * @author MJ Youn
  * @since 2022. 06. 21.
  */
-@Slf4j
+@Validated
 @Service(DownloadService.QUALIFIER_NAME)
 public class DownloadService {
+
+    protected static final Logger logger = LoggerFactory.getLogger(DownloadService.class);
 
     public static final String QUALIFIER_NAME = "io.github.mjyoun.spring.web.service.DownloadService";
 
@@ -100,7 +103,7 @@ public class DownloadService {
         final String methodName = "DownloadService#downloadCSV";
 
         fileName = new StringBuffer(fileName).append(".csv").toString();
-        log.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
+        logger.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
 
         // csv content 생성
         byte[] contentBytes = this.csvService.createCSV(fileName, headers, datas, separator, quote);
@@ -118,9 +121,9 @@ public class DownloadService {
             response.setHeader("Content-Disposition", contentDisposition);
 
             FileCopyUtils.copy(inputStream, response.getOutputStream());
-            log.debug("[{}] CSV 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
+            logger.debug("[{}] CSV 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
         } catch (IOException ioe) {
-            log.error("[{}] CSV 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
+            logger.error("[{}] CSV 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
             ioe.printStackTrace();
         }
     }
@@ -170,11 +173,11 @@ public class DownloadService {
 
         if (!Files.exists(filePath)) {
             String msg = "존재하지 않는 파일입니다.";
-            log.error("[{}] {} [path: {}]", methodName, msg, filePath);
+            logger.error("[{}] {} [path: {}]", methodName, msg, filePath);
             throw new FileNotFoundException(msg);
         } else if (Files.isDirectory(filePath)) {
             String msg = "디렉토리는 다운로드 할 수 없습니다.";
-            log.error("[{}] {} [path: {}]", methodName, msg, filePath);
+            logger.error("[{}] {} [path: {}]", methodName, msg, filePath);
             throw new FileNotFoundException(msg);
         } else {
             String contentDisposition = new StringBuffer("attachment; filename=\"") //
@@ -182,7 +185,7 @@ public class DownloadService {
                     .append("\"") //
                     .toString();
 
-            log.debug("[{}] 다운로드 할 파일 이름: {}", methodName, downloadFileName);
+            logger.debug("[{}] 다운로드 할 파일 이름: {}", methodName, downloadFileName);
 
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
             response.setContentLength((int) filePath.toFile().length());
@@ -190,9 +193,9 @@ public class DownloadService {
 
             try {
                 Files.copy(filePath, response.getOutputStream());
-                log.debug("[{}] 파일 다운로드 요청 성공 [file name: {}]", methodName, downloadFileName);
+                logger.debug("[{}] 파일 다운로드 요청 성공 [file name: {}]", methodName, downloadFileName);
             } catch (IOException ioe) {
-                log.error("[{}] 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
+                logger.error("[{}] 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
                 ioe.printStackTrace();
             }
         }
@@ -267,7 +270,7 @@ public class DownloadService {
                 .append("\"") //
                 .toString();
 
-        log.debug("[{}] 다운로드 할 파일 이름: {}", methodName, downloadFileName);
+        logger.debug("[{}] 다운로드 할 파일 이름: {}", methodName, downloadFileName);
 
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
         response.setContentLength((int) contents.length);
@@ -277,9 +280,9 @@ public class DownloadService {
             InputStream inputStream = new ByteArrayInputStream(contents);
 
             FileCopyUtils.copy(inputStream, response.getOutputStream());
-            log.debug("[{}] 파일 다운로드 요청 성공 [file name: {}]", methodName, downloadFileName);
+            logger.debug("[{}] 파일 다운로드 요청 성공 [file name: {}]", methodName, downloadFileName);
         } catch (IOException ioe) {
-            log.error("[{}] 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
+            logger.error("[{}] 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
             ioe.printStackTrace();
         }
     }
@@ -307,7 +310,7 @@ public class DownloadService {
         final String methodName = "DownloadService#downladExcel";
 
         fileName = new StringBuffer(fileName).append(".xlsx").toString();
-        log.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
+        logger.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
 
         SXSSFWorkbook workbook = ExcelUtils.create(headers, datas);
 
@@ -322,9 +325,9 @@ public class DownloadService {
             response.setHeader("Content-Disposition", contentDisposition);
 
             workbook.write(outputStream);
-            log.debug("[{}] Excel 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
+            logger.debug("[{}] Excel 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
         } catch (IOException ioe) {
-            log.error("[{}] Excel 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
+            logger.error("[{}] Excel 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
             ioe.printStackTrace();
         }
     }
@@ -354,7 +357,7 @@ public class DownloadService {
         final String methodName = "DownloadService#downladExcel";
 
         fileName = new StringBuffer(fileName).append(".xlsx").toString();
-        log.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
+        logger.debug("[{}] 다운로드 파일 이름: {}", methodName, fileName);
 
         SXSSFWorkbook workbook = ExcelUtils.create(contents, clazz);
 
@@ -369,9 +372,9 @@ public class DownloadService {
             response.setHeader("Content-Disposition", contentDisposition);
 
             workbook.write(outputStream);
-            log.debug("[{}] Excel 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
+            logger.debug("[{}] Excel 파일 다운로드 요청 성공 [file name: {}]", methodName, fileName);
         } catch (IOException ioe) {
-            log.error("[{}] Excel 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
+            logger.error("[{}] Excel 파일 다운로드 실패 [msg: {}]", methodName, ioe.getMessage());
             ioe.printStackTrace();
         }
     }

@@ -3,8 +3,8 @@ package io.github.mjyoun.spring.web.validation.validator;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 import io.github.mjyoun.spring.web.validation.annotation.AtLeastOneField;
 

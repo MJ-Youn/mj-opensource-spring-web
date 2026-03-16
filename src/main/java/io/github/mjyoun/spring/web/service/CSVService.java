@@ -8,13 +8,14 @@ import java.nio.file.StandardOpenOption;
 import java.text.NumberFormat;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.opencsv.CSVWriter;
 
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * CSV 파일 관련된 서비스
@@ -22,9 +23,11 @@ import lombok.extern.slf4j.Slf4j;
  * @author MJ Youn
  * @since 2022. 06. 21.
  */
-@Slf4j
+@Validated
 @Service(CSVService.QUALIFIER_NAME)
 public class CSVService {
+
+    protected static final Logger logger = LoggerFactory.getLogger(CSVService.class);
 
     public static final String QUALIFIER_NAME = "io.github.mjyoun.spring.web.service.CSVService";
 
@@ -66,19 +69,19 @@ public class CSVService {
         )) {
             // header 입력
             if (headers == null) {
-                log.debug("[{}] 헤더가 없는 CSV 파일", methodName);
+                logger.debug("[{}] 헤더가 없는 CSV 파일", methodName);
             } else {
                 csvWriter.writeNext(headers);
-                log.debug("[{}] 헤더 설정 완료 [header count: {}]", methodName, headers.length);
+                logger.debug("[{}] 헤더 설정 완료 [header count: {}]", methodName, headers.length);
             }
 
             // body 입력
             if (wasSetQuote) {
-                log.debug("[{}] 따옴표가 설정되어 있어, 모든 데이터를 따옴표로 감싸서 출력합니다. [quote: {}]", methodName, quote);
+                logger.debug("[{}] 따옴표가 설정되어 있어, 모든 데이터를 따옴표로 감싸서 출력합니다. [quote: {}]", methodName, quote);
             }
 
             csvWriter.writeAll(datas, wasSetQuote);
-            log.debug("[{}] 데이터 설정 완료 [data count: {}]", methodName, NumberFormat.getInstance().format(datas.size()));
+            logger.debug("[{}] 데이터 설정 완료 [data count: {}]", methodName, NumberFormat.getInstance().format(datas.size()));
         }
 
         String fileContent = writer.toString();
@@ -111,10 +114,10 @@ public class CSVService {
 
         Path directory = path.getParent();
         Files.createDirectories(directory);
-        log.debug("[{}] 상위 디렉토리 생성 [directory: {}]", methodName, directory.normalize().toString());
+        logger.debug("[{}] 상위 디렉토리 생성 [directory: {}]", methodName, directory.normalize().toString());
 
         Files.write(path, csvBytes, StandardOpenOption.CREATE);
-        log.debug("[{}] 파일 저장 완료 [path: {}]", methodName, path.normalize().toString());
+        logger.debug("[{}] 파일 저장 완료 [path: {}]", methodName, path.normalize().toString());
     }
 
 }

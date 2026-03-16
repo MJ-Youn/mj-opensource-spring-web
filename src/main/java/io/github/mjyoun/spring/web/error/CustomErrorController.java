@@ -2,9 +2,8 @@ package io.github.mjyoun.spring.web.error;
 
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -14,7 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import io.github.mjyoun.core.data.Result;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 /**
  * 에러 핸들 controller
@@ -23,8 +23,9 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2022. 01. 04.
  */
 @RestControllerAdvice
-@Slf4j
 public class CustomErrorController {
+
+    protected static final Logger logger = LoggerFactory.getLogger(CustomErrorController.class);
 
     /**
      * validate 오류시 동작하는 화면
@@ -62,7 +63,7 @@ public class CustomErrorController {
             throw new RuntimeException("존재하지 않는 오류입니다.");
         }
 
-        log.error("[CustomErrorController] 유효성 검사 오류 [msg: {}]", result.getMessage(), e);
+        logger.error("[CustomErrorController] 유효성 검사 오류 [msg: {}]", result.getMessage(), e);
         return new ResponseEntity<Result<String>>(result, HttpStatus.BAD_REQUEST);
     }
 
@@ -80,7 +81,7 @@ public class CustomErrorController {
     public ResponseEntity<Result<String>> error(Exception e) {
         Result<String> result = Result.error(e.getMessage());
 
-        log.error("[CustomErrorController] 서버 오류 [msg: {}]", result.getMessage(), e);
+        logger.error("[CustomErrorController] 서버 오류 [msg: {}]", result.getMessage(), e);
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
