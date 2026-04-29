@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.6</version>
-		<relativePath/>
-	</parent>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.6</version>
+        <relativePath />
+    </parent>
 
-	<!-- Developer info -->
-	<developers>
-		<developer>
-			<id>yun0244</id>
-			<name>MJ Youn</name>
-			<email>yun0244@naver.com</email>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<organization>MJ Youn</organization>
-			<organizationUrl>http://mj-youn.github.io</organizationUrl>
-		</developer>
-	</developers>
+    <!-- Developer info -->
+    <developers>
+        <developer>
+            <id>yun0244</id>
+            <name>MJ Youn</name>
+            <email>yun0244@naver.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <organization>MJ Youn</organization>
+            <organizationUrl>http://mj-youn.github.io</organizationUrl>
+        </developer>
+    </developers>
 
-	<!-- License -->
-	<licenses>
-		<license>
-			<name>MIT License</name>
-			<url>https://opensource.org/licenses/MIT</url>
-		</license>
-	</licenses>
+    <!-- License -->
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
-	<groupId>io.github.mj-youn</groupId>
+    <groupId>io.github.mj-youn</groupId>
 
-	<artifactId>spring-web</artifactId>
-	<version>25.4.7-20260429.0</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
+    <artifactId>spring-web</artifactId>
+    <version>25.4.7-20260429.1</version> <!-- '-SNAPSHOT'으로 끝나면 snapshot, 아닐 경우 release로 배포됨 -->
 
-	<name>io.github.mj-youn.spring-web</name>
-	<description>A project that organizes frequently used utilities in Spring Web Service</description>
+    <name>io.github.mj-youn.spring-web</name>
+    <description>A project that organizes frequently used utilities in Spring Web Service</description>
+    <url>https://github.com/mj-youn/mj-opensource-spring-web</url>
 
-	<properties>
-		<maven.compiler.source>25</maven.compiler.source>
-		<maven.compiler.target>25</maven.compiler.target>
-	</properties>
+    <scm>
+        <url>https://github.com/mj-youn/mj-opensource-spring-web</url>
+        <connection>scm:git:git://github.com/mj-youn/mj-opensource-spring-web.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/mj-youn/mj-opensource-spring-web.git</developerConnection>
+    </scm>
+
+    <properties>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -57,74 +64,74 @@
             <dependency>
                 <groupId>io.github.mj-youn</groupId>
                 <artifactId>bom</artifactId>
-                <version>25.4.7.1</version>
+                <version>25.4.7.2</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-	<dependencies>
-		<!-- BEGIN: 내가 개발한 프로젝트 추가 -->
-		<dependency>
-			<groupId>io.github.mj-youn</groupId>
-			<artifactId>core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.mj-youn</groupId>
-			<artifactId>spring</artifactId>
-		</dependency>
-		<!-- E N D: 내가 개발한 프로젝트 추가 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aspectj</artifactId>
-		</dependency>
-		<!-- BEGIN: security -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-		</dependency>
-		<!-- E N D: security -->
+    <dependencies>
+        <!-- BEGIN: 내가 개발한 프로젝트 추가 -->
+        <dependency>
+            <groupId>io.github.mj-youn</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.mj-youn</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
+        <!-- E N D: 내가 개발한 프로젝트 추가 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aspectj</artifactId>
+        </dependency>
+        <!-- BEGIN: security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+        <!-- E N D: security -->
 
-		<!-- BEGIN: web -->
-		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<!-- E N D: web -->
+        <!-- BEGIN: web -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <!-- E N D: web -->
 
-		<!-- BEGIN: logger -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<!-- E N D: logger -->
+        <!-- BEGIN: logger -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- E N D: logger -->
 
-		<dependency>
-			<groupId>jakarta.validation</groupId>
-			<artifactId>jakarta.validation-api</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 
-		<!-- ************** -->
-		<!-- begin: jackson -->
+        <!-- ************** -->
+        <!-- begin: jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
@@ -143,142 +150,144 @@
             <groupId>tools.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
         </dependency>
-		<!-- end: jackson -->
-		<!-- ************** -->
+        <!-- end: jackson -->
+        <!-- ************** -->
 
-		<!-- BEGIN: opencsv -->
-		<dependency>
-			<groupId>com.opencsv</groupId>
-			<artifactId>opencsv</artifactId>
-			<version>5.5.2</version>
-		</dependency>
-		<!-- E N D: opencsv -->
+        <!-- BEGIN: opencsv -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.5.2</version>
+        </dependency>
+        <!-- E N D: opencsv -->
 
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-	<!-- publishing 설정 -->
-	<distributionManagement>
-		<!-- release publishing -->
-		<repository>
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-		<!-- snapshot publishing -->
-		<snapshotRepository>
-			<id>central</id>
-			<name>Central Repository Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <!-- publishing 설정 -->
+    <distributionManagement>
+        <!-- release publishing -->
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+        <!-- snapshot publishing -->
+        <snapshotRepository>
+            <id>central</id>
+            <name>Central Repository Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
-	<build>
-		<!-- BEGIN: "maven-enforcer-plugin (goal "enforce") is ignored by m2e." warning을 무시하기 위한 구문 -->
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-enforcer-plugin</artifactId>
-										<versionRange>[1.0.0,)</versionRange>
-										<goals>
-											<goal>enforce</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<!-- E N D: "maven-enforcer-plugin (goal "enforce") is ignored by m2e." warning을 무시하기 위한 구문 -->
-		<plugins>
-			<!-- BEGIN: publishing -->
-			<plugin>
-				<groupId>org.sonatype.central</groupId>
-				<artifactId>central-publishing-maven-plugin</artifactId>
-				<version>0.7.0</version>
-				<extensions>true</extensions>
-				<configuration>
-					<publishingServerId>central</publishingServerId>
-				</configuration>
-			</plugin>
-			<!-- E N D: publishing -->
-			<!-- BEGIN: java doc -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.3.0</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- E N D: java doc -->
-			<!-- BEGIN: GPG 서명 설정 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>3.2.7</version>
-				<configuration>
-					<gpgArguments>
-						<arg>--pinentry-mode</arg>
-						<arg>loopback</arg>
-					</gpgArguments>
-				</configuration>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- E N D: GPG 서명 설정 -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<annotationProcessorPaths>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <!-- BEGIN: "maven-enforcer-plugin (goal "enforce") is ignored by m2e." warning을 무시하기 위한 구문 -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.apache.maven.plugins</groupId>
+                                        <artifactId>maven-enforcer-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>enforce</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <!-- E N D: "maven-enforcer-plugin (goal "enforce") is ignored by m2e." warning을 무시하기 위한 구문 -->
+        <plugins>
+            <!-- BEGIN: publishing -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.7.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>          <!-- 검증 완료 시 사용자가 버튼 안 눌러도 자동 Publish -->
+                    <waitUntil>published</waitUntil>         <!-- 완전히 Publish 끝날 때까지 터미널 안 끄고 대기 -->
+                </configuration>
+            </plugin>
+            <!-- E N D: publishing -->
+            <!-- BEGIN: java doc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- E N D: java doc -->
+            <!-- BEGIN: GPG 서명 설정 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.7</version>
+                <configuration>
+                    <gpgArguments>
+                        <arg>--pinentry-mode</arg>
+                        <arg>loopback</arg>
+                    </gpgArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- E N D: GPG 서명 설정 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
